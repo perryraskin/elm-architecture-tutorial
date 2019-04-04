@@ -2,8 +2,7 @@ import Browser
 import Html exposing (Html, Attribute, span, input, text, div, br)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onInput)
-
-
+import Round
 
 -- MAIN
 
@@ -77,7 +76,7 @@ viewI : String -> Html Msg
 viewI inputI =
   case String.toFloat inputI of
   Just inches ->
-    viewConverterI inputI "blue" (String.fromFloat (inches / 39.3701))
+    viewConverterI inputI "blue" (Round.round 2 (inches / 39.3701))
 
   Nothing ->
     viewConverterI inputI "red" "???"
