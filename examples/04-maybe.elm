@@ -19,6 +19,7 @@ main =
 type alias Model =
   { inputC : String
   , inputF : String
+  , inputI : String
   }
 
 
@@ -26,6 +27,7 @@ init : Model
 init =
   { inputC = ""
   , inputF = ""
+  , inputI = ""
   }
 
 
@@ -36,6 +38,7 @@ init =
 type Msg
   = ChangeC String
   | ChangeF String
+  | ChangeI String
 
 
 update : Msg -> Model -> Model
@@ -45,6 +48,8 @@ update msg model =
       { model | inputC = newInputC }
     ChangeF newInputF ->
       { model | inputF = newInputF }
+    ChangeI newInputI ->
+      { model | inputI = newInputI }
 
 
 
@@ -68,12 +73,22 @@ viewF inputF =
   Nothing ->
     viewConverterF inputF "red" "???"
 
+viewI : String -> Html Msg
+viewI inputI =
+  case String.toFloat inputI of
+  Just inches ->
+    viewConverterI inputI "blue" (String.fromFloat (inches / 39.3701))
+
+  Nothing ->
+    viewConverterI inputI "red" "???"
+
 
 view : Model -> Html Msg
 view model =
   div []
     [ viewC model.inputC
     , viewF model.inputF
+    , viewI model.inputI
     ]
 
 
@@ -116,6 +131,24 @@ viewConverterF userInput color equivalentTemp =
         , text "°C"
         ]
 
+viewConverterI : String -> String -> String -> Html Msg
+viewConverterI userInput color equivalentLength =
+  case String.toFloat userInput of
+    Just inches ->
+      div []
+        [ input [ value userInput, onInput ChangeI, style "width" "40px"] []
+        , text " inches = "
+        , span [ style "color" color ] [ text equivalentLength ]
+        , text " meters"
+        ]
+
+    Nothing ->
+      div []
+        [ input [ value userInput, onInput ChangeI, style "width" "40px", style "border-color" "red" ] []
+        , text " inches = "
+        , span [ style "color" color ] [ text equivalentLength ]
+        , text " meters"
+        ]
 
 
 
