@@ -56,27 +56,10 @@ update msg model =
       , Cmd.none
       )
 
-
-getDie1Face : (Int, Int) -> String
-getDie1Face face =
-  case Tuple.first face of
-    1 ->
-      "https://upload.wikimedia.org/wikipedia/commons/2/2c/Alea_1.png"
-    2 ->
-      "https://upload.wikimedia.org/wikipedia/commons/b/b8/Alea_2.png"
-    3 ->
-      "https://upload.wikimedia.org/wikipedia/commons/2/2f/Alea_3.png"
-    4 ->
-      "https://upload.wikimedia.org/wikipedia/commons/8/8d/Alea_4.png"
-    5 ->
-      "https://upload.wikimedia.org/wikipedia/commons/5/55/Alea_5.png"
-    6 ->
-      "https://upload.wikimedia.org/wikipedia/commons/f/f4/Alea_6.png"
-    _ ->
-      ""
-getDie2Face : (Int, Int) -> String
-getDie2Face face =
-  case Tuple.second face of
+-- Get die image of respective rolled number
+getDieFace : Int -> String
+getDieFace face =
+  case face of
     1 ->
       "https://upload.wikimedia.org/wikipedia/commons/2/2c/Alea_1.png"
     2 ->
@@ -108,8 +91,8 @@ subscriptions model =
 view : Model -> Html Msg
 view model =
   div []
-    [ img [ src (getDie1Face model.dieFace) ] []
-    , img [ src (getDie2Face model.dieFace) ] []
+    [ img [ src (getDieFace (Tuple.first model.dieFace)) ] []
+    , img [ src (getDieFace (Tuple.second model.dieFace)) ] []
     , div []
     [ button [ onClick Roll ] [ text "Roll" ] ]
     ]
