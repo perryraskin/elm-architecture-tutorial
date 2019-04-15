@@ -23,13 +23,13 @@ main =
 
 
 type alias Model =
-  { dieFace : Int
+  { dieFace : (Int, Int)
   }
 
 
 init : () -> (Model, Cmd Msg)
 init _ =
-  ( Model 1
+  ( Model (1, 1)
   , Cmd.none
   )
 
@@ -40,7 +40,7 @@ init _ =
 
 type Msg
   = Roll
-  | NewFace Int
+  | NewFace (Int, Int)
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -48,7 +48,7 @@ update msg model =
   case msg of
     Roll ->
       ( model
-      , Random.generate NewFace (Random.int 1 6)
+      , Random.generate NewFace (Random.pair (Random.int 1 6) (Random.int 1 6))
       )
 
     NewFace newFace ->
@@ -57,9 +57,26 @@ update msg model =
       )
 
 
-getDieFace : Int -> String
-getDieFace face =
-  case face of
+getDie1Face : (Int, Int) -> String
+getDie1Face face =
+  case Tuple.first face of
+    1 ->
+      "https://upload.wikimedia.org/wikipedia/commons/2/2c/Alea_1.png"
+    2 ->
+      "https://upload.wikimedia.org/wikipedia/commons/b/b8/Alea_2.png"
+    3 ->
+      "https://upload.wikimedia.org/wikipedia/commons/2/2f/Alea_3.png"
+    4 ->
+      "https://upload.wikimedia.org/wikipedia/commons/8/8d/Alea_4.png"
+    5 ->
+      "https://upload.wikimedia.org/wikipedia/commons/5/55/Alea_5.png"
+    6 ->
+      "https://upload.wikimedia.org/wikipedia/commons/f/f4/Alea_6.png"
+    _ ->
+      ""
+getDie2Face : (Int, Int) -> String
+getDie2Face face =
+  case Tuple.second face of
     1 ->
       "https://upload.wikimedia.org/wikipedia/commons/2/2c/Alea_1.png"
     2 ->
@@ -91,7 +108,8 @@ subscriptions model =
 view : Model -> Html Msg
 view model =
   div []
-    [ img [ src (getDieFace model.dieFace) ] []
+    [ img [ src (getDie1Face model.dieFace) ] []
+    , img [ src (getDie2Face model.dieFace) ] []
     , div []
     [ button [ onClick Roll ] [ text "Roll" ] ]
     ]
