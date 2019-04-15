@@ -56,6 +56,24 @@ update msg model =
       )
 
 
+getDieFace : Int -> String
+getDieFace face =
+  case face of
+    1 ->
+      "⚀"
+    2 ->
+      "⚁"
+    3 ->
+      "⚂"
+    4 ->
+      "⚃"
+    5 ->
+      "⚄"
+    6 ->
+      "⚅"
+    _ ->
+      ""
+
 
 -- SUBSCRIPTIONS
 
@@ -72,6 +90,6 @@ subscriptions model =
 view : Model -> Html Msg
 view model =
   div []
-    [ h1 [] [ text (String.fromInt model.dieFace) ]
+    [ h1 [] [ text (getDieFace model.dieFace) ]
     , button [ onClick Roll ] [ text "Roll" ]
     ]
