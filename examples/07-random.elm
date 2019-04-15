@@ -1,4 +1,5 @@
 import Browser
+import Html.Attributes exposing (..)
 import Html exposing (..)
 import Html.Events exposing (..)
 import Random
@@ -60,17 +61,17 @@ getDieFace : Int -> String
 getDieFace face =
   case face of
     1 ->
-      "⚀"
+      "https://upload.wikimedia.org/wikipedia/commons/2/2c/Alea_1.png"
     2 ->
-      "⚁"
+      "https://upload.wikimedia.org/wikipedia/commons/b/b8/Alea_2.png"
     3 ->
-      "⚂"
+      "https://upload.wikimedia.org/wikipedia/commons/2/2f/Alea_3.png"
     4 ->
-      "⚃"
+      "https://upload.wikimedia.org/wikipedia/commons/8/8d/Alea_4.png"
     5 ->
-      "⚄"
+      "https://upload.wikimedia.org/wikipedia/commons/5/55/Alea_5.png"
     6 ->
-      "⚅"
+      "https://upload.wikimedia.org/wikipedia/commons/f/f4/Alea_6.png"
     _ ->
       ""
 
@@ -90,6 +91,7 @@ subscriptions model =
 view : Model -> Html Msg
 view model =
   div []
-    [ h1 [] [ text (getDieFace model.dieFace) ]
-    , button [ onClick Roll ] [ text "Roll" ]
+    [ img [ src (getDieFace model.dieFace) ] []
+    , div []
+    [ button [ onClick Roll ] [ text "Roll" ] ]
     ]
