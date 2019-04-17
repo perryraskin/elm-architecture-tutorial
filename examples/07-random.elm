@@ -90,7 +90,7 @@ subscriptions model =
 
 view : Model -> Html Msg
 view model =
-  div []
+  div [align "center"]
     [ img [ src (getDieFace (Tuple.first model.dieFace)) ] []
     , img [ src (getDieFace (Tuple.second model.dieFace)) ] []
     , div []
